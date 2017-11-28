@@ -3,7 +3,9 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "start": "node ./bin/www"
+        "start": "DEBUG=nodetest1:* nodemon ./bin/www",
+        "mongod": "mongod -f mongod.conf",
+        "stop": "mongo ./stop-mongod.js"
     },
     "dependencies": {
         "body-parser": "~1.16.0",
