@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Page 1</title>
+  <style type="text/css">
+    a:link, a:visited {
+        color:#06F;
+    }
+    a:hover {
+        color:#39F;
+    }
+    #contentDiv {
+        width:300px;
+        padding:30px;
+        background:rgba(0, 0, 0, 0.1);
+        border:rgba(0, 0, 0, 0.2);
+        font-size:24px;
+        border-radius:15px;
+    }
+    ul#pagination {
+        width:300px;
+        text-align:center;
+    }
+    ul#pagination li {
+        display:inline-block;
+        margin-right:20px;
+    }
+    ul#pagination li:last-child {
+        margin:0;
+    } 
+  </style>
+  <!-- See https://code.jquery.com/jquery/ -->
+  <script src="https://code.jquery.com/jquery-1.9.1.js"
+    integrity="sha256-e9gNBsAcA0DBuRWbm0oZfbiCyhjLrI6bmqAl5o+ZjUA="
+    crossorigin="anonymous">
+  </script>
+
+  <script type="text/javascript">
+     $(document).ready(function () {
+
+        // Catch Clicks
+        $('#pagination').on('click', 'a.pagelink', function(e) {
+
+            e.preventDefault();
+
+            // Get the current data-page attribute
+            var currPage = $('#contentDiv').attr('data-page');
+            var clickedLink = $(this).attr('data-linktype');
+
+            // Change Content
+            getPage(currPage, clickedLink);
+
+        });
+
+    });
+
+    function getPage(currPage, clickedLink) {
+
+        // This would probably be an AJAX call in a real app.
+        // We're just going to fake it here and do some DOM
+        // Manipulation.
+
+        // Make sure currPage is an int
+        currPage = parseInt(currPage, 10);
+
+        // If it was the Next link
+        if (clickedLink === "next") {
+            currPage++;
+        }
+        // Otherwise if it was the Previous link
+        else if (clickedLink === "prev") {
+            // lowest we want to go is 1
+            if (currPage > 1) {
+                currPage--;
+            }
+        }
+        // Otherwise something went wrong
+        else {
+            // Actual error checking would go here!
+            return false;
+        }
+
+        // Update our DOM elements
+        $('#contentDiv').html('This is Page ' + currPage);
+        $('#contentDiv').attr('data-page', currPage);
+    } 
+  </script>
+</head>
+<body>
+    <div id="contentDiv" data-page="1">This is Page 1</div>
+    <ul id="pagination">
+        <li class="prev"><a class="pagelink" href="#" title="Show Previous Page" data-linktype="prev">Previous Page</a>
+        </li>
+        <li class="next"><a class="pagelink" href="#" title="Show Next Page" data-linktype="next">Next Page</a>
+        </li>
+    </ul>
+</body>
+</html>
